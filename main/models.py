@@ -12,14 +12,5 @@ class SearchForm(models.Model):
         )
         interests = models.CharField(max_length = 20, default = "leisure")
 
-class StudSearchForm(models.Model):
-        type = models.CharField(
-            max_length = 30,
-            choices = type_choices,
-            default = 0,
-        )
-        interests = models.CharField(max_length = 20, default = "leisure")
-
-
 
 # Create your models here.

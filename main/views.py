@@ -5,7 +5,7 @@ from allauth.socialaccount.models import SocialAccount
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import SearchForm, StudSearchForm
-from .models import Search
+from .models import SearchForm
 from orgs.models import Org, OrgMember
 import smtplib
 
@@ -66,8 +66,7 @@ def apply_or_disapply(request, pk):
         mail.ehlo()
         mail.starttls()
 
-        message = f'New Application:\nName: {stud_user.profile.name}\nID: {stud_user.profile.bits_id}
-                  \nEmail: {stud_user.profile.name}\n'
+        message = f'New Application:\nName: {stud_user.profile.name}\nID: {stud_user.profile.bits_id} \nEmail: {stud_user.profile.name}\n'
 
         mail.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
         email = org_user.email
@@ -136,8 +135,7 @@ def add_delete_member(request, pk):
         mail.ehlo()
         mail.starttls()
 
-        message = f'Application Acceptance:\nName: {stud_user.profile.name}\nID: {stud_user.profile.bits_id}
-                  \nYou have been successfully inducted into {org_user.org.name}!'
+        message = f'Application Acceptance:\nName: {stud_user.profile.name}\nID: {stud_user.profile.bits_id}\nYou have been successfully inducted into {org_user.org.name}!'
 
         mail.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
         email = new_stud.email

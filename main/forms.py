@@ -1,13 +1,13 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Search
+from .models import SearchForm
 from profiles.models import Profile
 from orgs.models import Org, OrgMember
 from allauth.socialaccount.forms import SignupForm
 from allauth.account.forms import LoginForm
 
-class SearchForm(models.ModelForm):
+class SearchForm(forms.ModelForm):
 
     class Meta:
         model = SearchForm

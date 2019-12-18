@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import search_orgs, search_studs, search_results, add_delete_member, apply_or_disapply, org_detail, stud_detail
+from .views import *
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
