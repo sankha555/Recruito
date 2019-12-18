@@ -13,7 +13,13 @@ def register_new_org(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            return redirect('create_org_profile', pk=request.user.org.id)
+
+            new_user = authenticate(username=form.cleaned_data['username'],
+                                    password=form.cleaned_data['password1'],
+                                    )
+            login(request, new_user)
+
+            return redirect('create_org_profile', pk=new_user.id)
     else :
         form = RegForm()
 

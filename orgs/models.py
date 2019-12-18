@@ -25,6 +25,8 @@ class Org(models.Model):
     members = models.ManyToManyField(User, blank = True, related_name = 'org_members')
     applicants = models.ManyToManyField(User, blank = True, related_name = 'org_applics')
 
+    qualifier = models.IntegerField(default=1) #qualifier : Orgs - 1  Students - 0
+
     def org_create_url(self):
         return reverse('create_org_profile', kwargs={'pk': self.pk})
 

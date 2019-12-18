@@ -1,0 +1,22 @@
+extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+   <div class="content-section">
+       <form method="POST">
+           {% csrf_token %}
+           <fieldset class="form-group">
+               <legend class="border-bottom mb-4">Search Organizations</legend>
+               <p><strong>Please enter the following preferences to help us search organizations for you</strong></p>
+               {{ form|crispy }}
+           </fieldset>
+           <div class="form-group">
+               <button class="btn btn-outline-info" type="submit">Search</button>
+           </div>
+       </form>
+       <div class="border-top pt-3">
+           <small class="text-muted">
+               Search for a Student? <a class="ml-2" href="{% url 'search_studs' %}">Search Students</a>
+           </small>
+       </div>
+   </div>
+{% endblock content %}

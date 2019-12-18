@@ -30,6 +30,8 @@ class Profile(models.Model):
     applied_orgs = models.ManyToManyField(User, blank=True, related_name='applied_orgs', default=None)
     member_orgs = models.ManyToManyField(User, blank=True, related_name='member_orgs', default=None)
 
+    qualifier = models.IntegerField(default=0) #qualifier : Orgs - 1  Students - 0
+
     def get_age(self):
         return 2019 - self.birthday.year
 

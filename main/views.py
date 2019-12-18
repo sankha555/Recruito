@@ -4,13 +4,21 @@ import requests
 from allauth.socialaccount.models import SocialAccount
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import StudSearchForm, SearchForm
+from .forms import SearchForm, StudSearchForm
 from .models import Search
 from orgs.models import Org, OrgMember
 
 exclude_words = ["is", "the", "from", "of", "an", "then", "them", "a"]
 org_pool = Org.objects.all()
 org_list = [None]
+
+@login_required
+def home(request):
+    user = request.user
+    if user.profile.qualifier == 1:
+        return redirect('stud_detail', pk = user.profile.id)
+    elif user.org.qualifier == 1:
+        return redirect('org_detail', pk = user.org.id)
 
 @login_required
 def search_orgs(request):
@@ -52,12 +60,11 @@ def apply_or_disapply(request, pk):
 
 @login_required
 def search_studs(request):
-    org = get_object_or_404(User, pk=request.user.org.id)
     studs = Profile.objects.all()
     flag = 0
 
     if request.method == "POST":
-        form = SearchForm(request.POST)
+        form = StudSearchForm(request.POST)
         stud_id = form.cleaned_data['bits_id']
 
         for stud in studs:
@@ -70,6 +77,20 @@ def search_studs(request):
 
     return render(request, "search_studs.html", {"form":form})
 
+@login_required
+def view_applications(request):
+
+    org_user = get_object_or_404(User, pk=request.user.id)
+    applicants = org_user.org.applicants.all()
+    new_applicants = [None]
+
+    for stud in applicants:
+        if stud in org.members.all():
+            pass
+        else:
+            new_applicants.add(stud)
+
+    return render(request, "view_applications.html", {'new_applicants':new_applicants})
 
 @login_required
 def add_delete_member(request, pk):
@@ -78,20 +99,39 @@ def add_delete_member(request, pk):
     new_stud = get_object_or_404(User, pk=pk)
 
     if new_stud in org.members.all():
-        org.members.remove(new_stud)
-        new_stud.member_orgs.remove(org_user)
+        org_user.org.members.remove(new_stud)
+        new_stud.profile.member_orgs.remove(org_user)
         messages.success(request, f'{new_stud.profile.name} added successfully as a member to {org_user.org.name}')
     else:
-        org.members.add(new_stud)
-        new_stud.member_orgs.add(org_user)
+        org_user.org.members.add(new_stud)
+        new_stud.profile.member_orgs.add(org_user)
         messages.success(request, f'{new_stud.profile.name} removed from {org_user.org.name}')
 
     return redirect('org_detail', pk=org_user.org.id)
+
+@login_required
+def reject_application(request, pk):
+
+    org_user = get_object_or_404(User, pk=request.user.id)
+    stud = get_object_or_404(User, pk=pk)
+
+    if stud in org_user.org.applicants.all():
+        applicants = org_user.org.applicants.all()
+        new_applicants = applicants.remove(stud)
+        messages.success(request, 'Application Rejected')
+
+    return render(request, "view_applications.html", {'new_applicants':new_applicants, 'messages':messages})
 
 @login_required
 def org_detail(request, pk):
 
     org = get_object_or_404(Org, pk=pk)
     return render(request, 'org_detail.html', {'org':org})
+
+@login_required
+def stud_detail(request, pk):
+
+    profile = get_object_or_404(Profile, pk=pk)
+    return render(request, 'stud_detail.html', {'profile':profile})
 
 # Create your views here.

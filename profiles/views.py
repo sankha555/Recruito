@@ -14,7 +14,13 @@ def register(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created successfully for {username}')
-            return redirect('create_profile', pk=request.user.profile.id)
+
+            new_user = authenticate(username=form.cleaned_data['username'],
+                                    password=form.cleaned_data['password1'],
+                                    )
+            login(request, new_user)
+
+            return redirect('create_profile', pk=new_user.id)
     else :
         form = RegForm()
 
