@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import SearchForm, StudSearchForm
 from .models import Search
 from orgs.models import Org, OrgMember
+import smtplib
 
 exclude_words = ["is", "the", "from", "of", "an", "then", "them", "a"]
 org_pool = Org.objects.all()
@@ -52,9 +53,28 @@ def apply_or_disapply(request, pk):
     if profile in org.applicants.all():
         org.applicants.remove(stud_user)
         profile.applied_orgs.remove(org)
-    else
+    else:
         org.applicants.add(stud_user)
         profile.applied_orgs.add(org)
+
+        #sending mail to organization
+        mail = smtplib.SMTP('smtp.gmail.com', settings.EMAIL_PORT)
+        mail.ehlo()
+        mail.starttls()
+
+        message = f'New Application:\nName: {stud_user.profile.name}\nID: {stud_user.profile.bits_id}
+                  \nEmail: {stud_user.profile.name}\n'
+
+        mail.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+        email = org_user.email
+
+        try:
+            mail.sendmail(settings.EMAIL_HOST_USER, email, message)
+        except:
+            pass
+
+        mail.close()
+        #mail closed
 
     return redirect('org_detail', pk=org_user.org.id)
 
@@ -106,6 +126,25 @@ def add_delete_member(request, pk):
         org_user.org.members.add(new_stud)
         new_stud.profile.member_orgs.add(org_user)
         messages.success(request, f'{new_stud.profile.name} removed from {org_user.org.name}')
+
+        #sending mail to student
+        mail = smtplib.SMTP('smtp.gmail.com', settings.EMAIL_PORT)
+        mail.ehlo()
+        mail.starttls()
+
+        message = f'Application Acceptance:\nName: {stud_user.profile.name}\nID: {stud_user.profile.bits_id}
+                  \nYou have been successfully inducted into {org_user.org.name}!'
+
+        mail.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+        email = new_stud.email
+
+        try:
+            mail.sendmail(settings.EMAIL_HOST_USER, email, message)
+        except:
+            pass
+
+        mail.close()
+        #mail closed
 
     return redirect('org_detail', pk=org_user.org.id)
 
