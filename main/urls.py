@@ -4,6 +4,8 @@ from .views import search_orgs, search_studs, search_results, add_delete_member,
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
+    path('', about, name='about'),
+    path('index/', home, name='home'),
     path('org_detail/<int:pk>/', org_detail, name='org_detail'),
     path('stud_detail/<int:pk>/', stud_detail, name='stud_detail'),
     path('search_orgs/', search_orgs, name='search_orgs'),

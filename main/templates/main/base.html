@@ -65,9 +65,8 @@
             <nav class="site-navigation position-relative text-right" role="navigation">
               <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
                 <li><a href="{% url 'main/home' %}" class="nav-link">Home</a></li>
-                <li><a href="" class="nav-link active">Clubs</a></li>
-                <li><a href="" class="nav-link">Departments</a></li>
-                <li><a href="" class="nav-link">Assocs</a></li>
+                <li><a href="{% url 'main/search_orgs'%}" class="nav-link active">Organizations</a></li>
+                <li><a href="{% url 'main/search_studs'%}" class="nav-link">Students</a></li>
                 {% if user.is_authenticated %}
                   <li><a href="{% url 'update_profile' %}" class="nav-link">Hello, {{user.profile.name}}</a></li>
                   <li><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>

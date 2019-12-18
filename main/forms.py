@@ -7,10 +7,10 @@ from orgs.models import Org, OrgMember
 from allauth.socialaccount.forms import SignupForm
 from allauth.account.forms import LoginForm
 
-class SearchForm(UserCreationForm):
+class SearchForm(models.ModelForm):
 
     class Meta:
-        model = Search
+        model = SearchForm
         fields = ['type', 'interests']
 
 class StudSearchForm(forms.ModelForm):

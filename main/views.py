@@ -14,6 +14,10 @@ org_pool = Org.objects.all()
 org_list = [None]
 
 @login_required
+def about(request):
+    return render(request, "main/about.html")
+
+@login_required
 def home(request):
     user = request.user
     if user.profile.qualifier == 1:
