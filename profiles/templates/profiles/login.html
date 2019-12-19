@@ -1,4 +1,5 @@
-{%extends "profiles/base.html"%}
+{%extends "main/base.html"%}
+{% load crispy_forms_tags %}
 {% block content %}
     <div class="bgimg" style="background-image: url('https://lh5.googleusercontent.com/p/AF1QipMoP-lQDLuQ82O_7klPGNXdE5bPRkcBJjyk2VT-=w240-h160-k-no');" data-stellar-background-ratio="0.5">
       <div class="container">
@@ -25,14 +26,17 @@
               <button class="btn btn-outline-info" type="submit">Log In</button>
             </div>
           </form>
-
+          </div>
         <div class="border-top pt-3">
           <small class="text-muted">
             Don't have an account ?
             <a href="{% url 'register' %}"> Sign Up </a>
+
           </small>
         </div>
         </div>
       </div>
     </div>
+
+
 {%endblock content%}

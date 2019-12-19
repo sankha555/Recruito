@@ -1,4 +1,4 @@
-{% extends "profiles/base.html" %}
+{% extends "main/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
 
@@ -16,6 +16,9 @@
       </div>
     </div>
 
+    <div class="site-section">
+      <div class="container">
+        <div class="row mb-5">
     <div class="content-section", enctype="multipart/form-data">
       <h1>{{user.profile.name}}</h1>
       <h2>{{user.username}}
@@ -30,6 +33,9 @@
         <button class="btn btn-outline-info" type="submit">Update Profile</button>
       </div>
     </form>
+    </div>
+    </div>
+    </div>
 
 
 {% endblock content %}

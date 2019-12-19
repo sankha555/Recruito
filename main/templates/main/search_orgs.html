@@ -1,12 +1,28 @@
 extends "main/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+<div class="bgimg" style="background-image: url('https://lh5.googleusercontent.com/p/AF1QipMoP-lQDLuQ82O_7klPGNXdE5bPRkcBJjyk2VT-=w240-h160-k-no');" data-stellar-background-ratio="0.5">
+  <div class="container">
+    <div class="row align-items-center justify-content-center text-center">
+      <div class="col-md-7">
+        <h2 class="">Search Organizations</h2>
+        <p class="lead mx-auto desc mb-5">
+            Please enter the following preferences to help us search organizations for you
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Main content of the page starts here-->
+<div class="site-section">
+  <div class="container">
+    <div class="row mb-5">
    <div class="content-section">
        <form method="POST">
            {% csrf_token %}
            <fieldset class="form-group">
                <legend class="border-bottom mb-4">Search Organizations</legend>
-               <p><strong>Please enter the following preferences to help us search organizations for you</strong></p>
                {{ form|crispy }}
            </fieldset>
            <div class="form-group">
@@ -19,4 +35,7 @@ extends "main/base.html" %}
            </small>
        </div>
    </div>
+  </div>
+  </div>
+  </div>
 {% endblock content %}

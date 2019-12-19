@@ -1,11 +1,18 @@
-{% extends "orgs/base.html" %}
+{%extends "main/base.html"%}
+{% load crispy_forms_tags %}
 {% block content %}
 
+<div class="site-section">
+  <div class="container">
+    <div class="row mb-5">
       <div class="border-top pt-3">
         <h1> The organization has been successfully logged out </h1>
         <small class="text-muted">
           <a href="{% url 'login' %}"> Log In Again </a>
         </small>
       </div>
+  </div>
+  </div>
+  </div>
 
 {% endblock content %}

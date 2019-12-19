@@ -21,7 +21,7 @@ def register_new_org(request):
 
             return redirect('create_org_profile', pk=new_user.id)
     else :
-        form = RegForm()
+        form = OrgRegForm()
 
     return render(request, 'orgs/register.html', {'form' : form})
 

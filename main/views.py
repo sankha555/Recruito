@@ -13,7 +13,6 @@ exclude_words = ["is", "the", "from", "of", "an", "then", "them", "a"]
 org_pool = Org.objects.all()
 org_list = [None]
 
-@login_required
 def about(request):
     return render(request, "main/about.html")
 
